@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/app_colors.dart';
+import 'package:islami/screens/home/tabs/hadeth_tab.dart';
+import 'package:islami/screens/home/tabs/quran_tab.dart';
+import 'package:islami/screens/home/tabs/radio_tab.dart';
+import 'package:islami/screens/home/tabs/sebha_tab.dart';
+import 'package:islami/screens/home/tabs/time_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -94,6 +99,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      body: tabs[index],
     );
   }
+
+  List<Widget> tabs = [
+    QuranTab(),
+    HadethTab(),
+    SebhaTab(),
+    RadioTab(),
+    TimeTab(),
+  ];
 }
