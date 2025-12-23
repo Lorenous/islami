@@ -7,55 +7,96 @@ class QuranTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/quranbg.jpg'),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/quranbg.jpg'),
+        ),
+      ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(color: AppColors.dark.withAlpha(158)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Image.asset('assets/images/intro_top.png', width: 250),
+            ),
+            SearchTextFeild(),
+            SizedBox(height: 20),
+            Text(
+              'Most Recently',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 10),
+            SuraCard(),
+            SizedBox(height: 10),
+            Text(
+              'Suras List',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: [SuraListTile(), SuraListTile(), SuraListTile()],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SuraListTile extends StatelessWidget {
+  const SuraListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        'Al-Fatiha',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      subtitle: Text(
+        '7 Verses',
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      trailing: Text(
+        'الفاتحه',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      leading: Stack(
+        alignment: AlignmentGeometry.center,
+        children: [
+          Image.asset('assets/images/sura_number.png'),
+          Text(
+            '114',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(color: AppColors.dark.withAlpha(158)),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.asset('assets/images/intro_top.png', width: 290),
-              ),
-              SizedBox(height: 16),
-              SearchTextFeild(),
-              SizedBox(height: 20),
-              Text(
-                'Most Recently',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(height: 10),
-              SuraCard(),
-              SizedBox(height: 10),
-              Text(
-                'Suras List',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(height: 10),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -113,6 +154,7 @@ class SearchTextFeild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      cursorColor: AppColors.primaryColor,
       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(14),
