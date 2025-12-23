@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/app_colors.dart';
 import 'package:islami/core/app_styles.dart';
+import 'package:islami/models/sura_model.dart';
 
 class QuranTab extends StatelessWidget {
   const QuranTab({super.key});
@@ -45,8 +46,17 @@ class QuranTab extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: [SuraListTile(), SuraListTile(), SuraListTile()],
+              child: ListView.separated(
+                itemBuilder: (context, index) => SuraListTile(
+                  suraModel: SuraModel(
+                    nameAr: surasName[index],
+                    nameEn: surasNameEnglish[index],
+                    versesNum: surasVersesCount[index],
+                    suraIndex: index,
+                  ),
+                ),
+                separatorBuilder: (context, index) => Divider(thickness: 2),
+                itemCount: surasName.length,
               ),
             ),
           ],
@@ -57,14 +67,15 @@ class QuranTab extends StatelessWidget {
 }
 
 class SuraListTile extends StatelessWidget {
-  const SuraListTile({super.key});
+  final SuraModel suraModel;
+  const SuraListTile({super.key, required this.suraModel});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(
-        'Al-Fatiha',
+        suraModel.nameEn,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -72,11 +83,11 @@ class SuraListTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        '7 Verses',
+        '${suraModel.versesNum} Verses',
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       trailing: Text(
-        'الفاتحه',
+        suraModel.nameAr,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -88,7 +99,7 @@ class SuraListTile extends StatelessWidget {
         children: [
           Image.asset('assets/images/sura_number.png'),
           Text(
-            '114',
+            '${suraModel.suraIndex + 1}',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

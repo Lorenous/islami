@@ -1,11 +1,12 @@
 class SuraModel {
   final String nameAr, nameEn;
-  final int versesNum;
+  final int versesNum, suraIndex;
 
   SuraModel({
     required this.nameAr,
     required this.nameEn,
     required this.versesNum,
+    required this.suraIndex,
   });
 }
 
