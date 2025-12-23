@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami/core/app_colors.dart';
 import 'package:islami/core/app_styles.dart';
 import 'package:islami/models/sura_model.dart';
+import 'package:islami/screens/sura_details_screen.dart';
 
 class QuranTab extends StatelessWidget {
   const QuranTab({super.key});
@@ -59,12 +60,19 @@ class SurasListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemBuilder: (context, index) => SuraListTile(
-        suraModel: SuraModel(
-          nameAr: surasName[index],
-          nameEn: surasNameEnglish[index],
-          versesNum: surasVersesCount[index],
-          suraIndex: index + 1,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          SuraDetailsScreen.routeName,
+          arguments: index,
+        ),
+        child: SuraListTile(
+          suraModel: SuraModel(
+            nameAr: surasName[index],
+            nameEn: surasNameEnglish[index],
+            versesNum: surasVersesCount[index],
+            suraIndex: index + 1,
+          ),
         ),
       ),
       separatorBuilder: (context, index) => Divider(thickness: 2),
@@ -81,12 +89,19 @@ class MostRecentlyListView extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) => SuraCard(
-        suraModel: SuraModel(
-          nameAr: surasName[index],
-          nameEn: surasNameEnglish[index],
-          versesNum: surasVersesCount[index],
-          suraIndex: index + 1,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          SuraDetailsScreen.routeName,
+          arguments: index,
+        ),
+        child: SuraCard(
+          suraModel: SuraModel(
+            nameAr: surasName[index],
+            nameEn: surasNameEnglish[index],
+            versesNum: surasVersesCount[index],
+            suraIndex: index + 1,
+          ),
         ),
       ),
       separatorBuilder: (context, index) => SizedBox(width: 10),
