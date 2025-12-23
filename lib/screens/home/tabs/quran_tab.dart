@@ -35,7 +35,7 @@ class QuranTab extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            SuraCard(),
+            SizedBox(height: 150, child: MostRecentlyListView()),
             SizedBox(height: 10),
             Text(
               'Suras List',
@@ -45,23 +45,52 @@ class QuranTab extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) => SuraListTile(
-                  suraModel: SuraModel(
-                    nameAr: surasName[index],
-                    nameEn: surasNameEnglish[index],
-                    versesNum: surasVersesCount[index],
-                    suraIndex: index,
-                  ),
-                ),
-                separatorBuilder: (context, index) => Divider(thickness: 2),
-                itemCount: surasName.length,
-              ),
-            ),
+            Expanded(child: SurasListView()),
           ],
         ),
       ),
+    );
+  }
+}
+
+class SurasListView extends StatelessWidget {
+  const SurasListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (context, index) => SuraListTile(
+        suraModel: SuraModel(
+          nameAr: surasName[index],
+          nameEn: surasNameEnglish[index],
+          versesNum: surasVersesCount[index],
+          suraIndex: index + 1,
+        ),
+      ),
+      separatorBuilder: (context, index) => Divider(thickness: 2),
+      itemCount: surasName.length,
+    );
+  }
+}
+
+class MostRecentlyListView extends StatelessWidget {
+  const MostRecentlyListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) => SuraCard(
+        suraModel: SuraModel(
+          nameAr: surasName[index],
+          nameEn: surasNameEnglish[index],
+          versesNum: surasVersesCount[index],
+          suraIndex: index + 1,
+        ),
+      ),
+      separatorBuilder: (context, index) => SizedBox(width: 10),
+      itemCount: surasName.length,
     );
   }
 }
@@ -99,7 +128,7 @@ class SuraListTile extends StatelessWidget {
         children: [
           Image.asset('assets/images/sura_number.png'),
           Text(
-            '${suraModel.suraIndex + 1}',
+            '${suraModel.suraIndex}',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -113,45 +142,45 @@ class SuraListTile extends StatelessWidget {
 }
 
 class SuraCard extends StatelessWidget {
-  const SuraCard({super.key});
+  final SuraModel suraModel;
+  const SuraCard({super.key, required this.suraModel});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 280,
       height: 150,
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Al-Anbiya',
-                  style: AppStyles.bold24.copyWith(color: AppColors.dark),
-                ),
-                Text(
-                  'الأنبياء',
-                  style: AppStyles.bold24.copyWith(color: AppColors.dark),
-                ),
-                Text(
-                  '112 Verses',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-              ],
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                suraModel.nameEn,
+                style: AppStyles.bold24.copyWith(color: AppColors.dark),
+              ),
+              Text(
+                suraModel.nameAr,
+                style: AppStyles.bold24.copyWith(color: AppColors.dark),
+              ),
+              Text(
+                '${suraModel.versesNum} Verses',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+            ],
           ),
-          Image.asset(
-            'assets/images/reading.png',
-            width: 150,
-            color: Colors.black,
+          Expanded(
+            child: Image.asset(
+              'assets/images/reading.png',
+              color: Colors.black,
+            ),
           ),
         ],
       ),
