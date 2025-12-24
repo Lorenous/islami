@@ -19,6 +19,9 @@ class CacheHelper {
     if (prevList.contains(index)) {
       prevList.remove(index);
     }
+    if (prevList.length > 10) {
+      prevList.removeLast();
+    }
     prevList.insert(0, index);
     final data = prevList.map((e) => e.toString()).toList();
     await prefs.setStringList('most_recently', data);
