@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/app_colors.dart';
 import 'package:islami/core/app_styles.dart';
+import 'package:islami/core/cache_helper.dart';
 import 'package:islami/models/sura_model.dart';
 import 'package:islami/screens/sura_details_screen.dart';
 
@@ -27,17 +28,19 @@ class QuranTab extends StatelessWidget {
             ),
             SearchTextFeild(),
             SizedBox(height: 20),
-            Text(
-              'Most Recently',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+            if (CacheHelper.getMostRecentlyItems().isNotEmpty) ...[
+              Text(
+                'Most Recently',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            SizedBox(height: 150, child: MostRecentlyListView()),
-            SizedBox(height: 10),
+              SizedBox(height: 10),
+              SizedBox(height: 150, child: MostRecentlyListView()),
+              SizedBox(height: 10),
+            ],
             Text(
               'Suras List',
               style: TextStyle(
@@ -46,6 +49,7 @@ class QuranTab extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+            SizedBox(height: 8),
             Expanded(child: SurasListView()),
           ],
         ),
@@ -54,18 +58,27 @@ class QuranTab extends StatelessWidget {
   }
 }
 
-class SurasListView extends StatelessWidget {
+class SurasListView extends StatefulWidget {
   const SurasListView({super.key});
 
   @override
+  State<SurasListView> createState() => _SurasListViewState();
+}
+
+class _SurasListViewState extends State<SurasListView> {
+  @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.zero,
       itemBuilder: (context, index) => GestureDetector(
-        onTap: () => Navigator.pushNamed(
-          context,
-          SuraDetailsScreen.routeName,
-          arguments: index,
-        ),
+        onTap: () async {
+          Navigator.pushNamed(
+            context,
+            SuraDetailsScreen.routeName,
+            arguments: index,
+          );
+          await CacheHelper.addMostRecentlyItem(index);
+        },
         child: SuraListTile(
           suraModel: SuraModel(
             nameAr: surasName[index],
@@ -93,19 +106,20 @@ class MostRecentlyListView extends StatelessWidget {
         onTap: () => Navigator.pushNamed(
           context,
           SuraDetailsScreen.routeName,
-          arguments: index,
+          arguments: CacheHelper.getMostRecentlyItems()[index],
         ),
         child: SuraCard(
           suraModel: SuraModel(
-            nameAr: surasName[index],
-            nameEn: surasNameEnglish[index],
-            versesNum: surasVersesCount[index],
-            suraIndex: index + 1,
+            nameAr: surasName[CacheHelper.getMostRecentlyItems()[index]],
+            nameEn: surasNameEnglish[CacheHelper.getMostRecentlyItems()[index]],
+            versesNum:
+                surasVersesCount[CacheHelper.getMostRecentlyItems()[index]],
+            suraIndex: CacheHelper.getMostRecentlyItems()[index] + 1,
           ),
         ),
       ),
       separatorBuilder: (context, index) => SizedBox(width: 10),
-      itemCount: surasName.length,
+      itemCount: CacheHelper.getMostRecentlyItems().length,
     );
   }
 }
