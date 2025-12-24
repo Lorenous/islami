@@ -41,6 +41,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
                 Image.asset('assets/images/right_corner.png'),
               ],
             ),
+            SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) => Center(
@@ -53,6 +54,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
                 itemCount: verses.length,
               ),
             ),
+            SizedBox(height: 10),
             Image.asset('assets/images/bottom_decoration.png'),
           ],
         ),
