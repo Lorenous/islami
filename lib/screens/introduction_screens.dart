@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami/core/app_colors.dart';
 import 'package:islami/core/app_styles.dart';
+import 'package:islami/core/cache_helper.dart';
 import 'package:islami/screens/home/home_screen.dart';
 
 class IntroductionScreens extends StatelessWidget {
@@ -60,8 +61,10 @@ class IntroductionScreens extends StatelessWidget {
       pages: pages,
       controlsPadding: EdgeInsets.symmetric(vertical: 16),
       done: Text('Done', style: TextStyle(color: AppColors.primaryColor)),
-      onDone: () =>
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName),
+      onDone: () {
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        CacheHelper.saveBool();
+      },
       next: Text('Next', style: TextStyle(color: AppColors.primaryColor)),
       showBackButton: true,
       back: Text('Back', style: TextStyle(color: AppColors.primaryColor)),
