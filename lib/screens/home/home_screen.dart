@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ImageIcon(AssetImage('assets/images/ic_hadeth.png')),
                   )
                 : ImageIcon(AssetImage('assets/images/ic_hadeth.png')),
-            label: 'Hadith',
+            label: 'Hadeth',
           ),
           BottomNavigationBarItem(
             icon: index == 2
