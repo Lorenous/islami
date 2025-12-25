@@ -29,6 +29,7 @@ flutter:
   assets:
     - assets/images/
     - assets/suras/
+    - assets/ahadeeth/
   # fonts:
   #   - family: Schyler
   #     fonts:
