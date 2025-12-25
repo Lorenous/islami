@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:islami/core/app_colors.dart';
 import 'package:islami/core/app_styles.dart';
 import 'package:islami/models/hadeth_model.dart';
+import 'package:islami/screens/hadeth_details.dart';
 
 class HadethTab extends StatefulWidget {
   const HadethTab({super.key});
@@ -109,15 +110,23 @@ class _HadethTabState extends State<HadethTab> {
                                 Expanded(
                                   child: ListView.builder(
                                     itemCount: hadeth.content.length,
-                                    itemBuilder: (context, index) => Text(
-                                      hadeth.content[index],
-                                      style: TextStyle(
-                                        color: AppColors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                    itemBuilder: (context, index) =>
+                                        GestureDetector(
+                                          onTap: () => Navigator.pushNamed(
+                                            context,
+                                            HadethDetails.routeName,
+                                            arguments: hadeth,
+                                          ),
+                                          child: Text(
+                                            hadeth.content[index],
+                                            style: TextStyle(
+                                              color: AppColors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                     padding: EdgeInsets.zero,
                                   ),
                                 ),
