@@ -37,16 +37,35 @@ class SebhaTab extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
+            Image.asset('assets/images/sebha_top.png', height: 80),
+
             Expanded(
               child: Stack(
+                alignment: AlignmentGeometry.center,
                 children: [
-                  Column(
-                    children: [
-                      Image.asset('assets/images/sebha_top.png', height: 80),
-                      Expanded(
-                        child: Image.asset('assets/images/sebhabody.png'),
-                      ),
-                    ],
+                  Image.asset('assets/images/sebhabody.png'),
+                  Positioned(
+                    top: MediaQuery.heightOf(context) * 0.167,
+                    child: Column(
+                      children: [
+                        Text(
+                          'سبحان الله',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '30',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
